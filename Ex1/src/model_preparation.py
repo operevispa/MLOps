@@ -93,7 +93,7 @@ if __name__ == "__main__":
         print("MSE=", results["MSE"], "R2=", results["R2"])
 
         # сохраняем модель
-        joblib.dump(model, f"models/model-{i+1}.pkl")
+        joblib.dump(model, f"{BASE_DIR}/models/model-{i+1}.pkl")
         print("The model is trained and saved in |model| folder\n")
 
     print(f"{num_dataset} dataset`s has been preprocessed!")
