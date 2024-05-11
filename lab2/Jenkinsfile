@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "${PATH}:/var/lib/jenkins/.local/bin"
+    }
+
+
     stages {
         stage('setup environment') {
             steps {
@@ -29,12 +34,7 @@ pipeline {
                             echo "The virtual environment has already been activated."
                         fi
                     '''
-
-                    echo 'pip installation'
-                    sh '''
-                        curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-                        python3 get-pip.py
-                    '''                    
+       
 
                     echo 'Dependency installation'
                     sh 'pip install -r requirements.txt'
