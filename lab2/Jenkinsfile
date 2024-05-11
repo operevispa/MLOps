@@ -31,31 +31,9 @@ pipeline {
                     '''
 
                     echo 'Dependency installation'
-                    sh '''
-                        if [ ! -f "lab2/requirements.txt" ]; then
-                            echo "File requirements.txt not found."
-                            return 1
-                        fi
-
-                        # Check if all dependencies from requirements.txt are installed
-                        for package in $(cat lab2/requirements.txt | cut -d '=' -f 1); do
-                            if ! pip freeze | grep -q "^$package=="; then
-                                echo "Dependency installation..."
-                                pip install -r lab2/requirements.txt
-                                echo "Dependencies installed."
-                                return 0
-                            fi
-                        done
-
-                        echo "All dependencies are already installed."
-                    '''
+                    sh 'pip install -r requirements.txt'
+                    
                 }                
-            }
-        }
-
-        stage('install packeges') {
-            steps {
-                sh 'pip install -r requirements.txt'
             }
         }
 
