@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('setup environment') {
+            steps {
+                sh '''
+                    python3 -m venv .venv
+                    source .venv/bin/activate
+                '''
+            }
+        }
+
+        stage('install packeges') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('data creation') {
+            steps {
+                sh 'python3 src/data_creation.py'
+            }
+        }
+
+        stage('train model') {
+            steps {
+                sh 'python3 src/train_model.py'
+            }
+        }
+
+        stage('test model') {
+            steps {
+                sh 'python3 src/test_model.py'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'echo "Pipeline completed."'
+        }
+    }
+}
