@@ -37,7 +37,13 @@ pipeline {
     }
     post {
         always {
-            sh 'echo "Pipeline completed."'
+            echo 'Pipeline has finished.'
+        }
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
