@@ -11,10 +11,10 @@ from train_model import train_model
 app = FastAPI()  # Создаем приложение в переменной app
 
 # Пути к файлам
-MODEL_PATH = "../model/model.pkl"
-SCALER_PATH = "../data/scaler.pkl"
-TARGET_PATH = "../data/target_names.pkl"
-FEATURES_PATH = "../data/features_info.pkl"
+MODEL_PATH = "model/model.pkl"
+SCALER_PATH = "data/scaler.pkl"
+TARGET_PATH = "data/target_names.pkl"
+FEATURES_PATH = "data/features_info.pkl"
 
 
 class Item(BaseModel):

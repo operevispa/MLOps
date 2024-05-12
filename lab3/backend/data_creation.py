@@ -39,32 +39,32 @@ def create_ds():
     print("Данные датасета обработаны и разделены на тренировочную и тестовую выборки")
 
     # создаем папку для хранения файлов
-    os.makedirs("../data", exist_ok=True)
+    os.makedirs("data", exist_ok=True)
 
     # формируем датафрейми с тренировочными данными и тестовыми, и выгружаем их на диск
     df_train = pd.DataFrame(X_train_scaled, columns=new_features)
     df_train["target"] = y_train
-    df_train.to_csv("../data/data_train.csv", index=False)
+    df_train.to_csv("data/data_train.csv", index=False)
     print("Тренировочный датасет сохранен: data/data_train.csv")
 
     df_test = pd.DataFrame(X_test_scaled, columns=new_features)
     df_test["target"] = y_test
-    df_test.to_csv("../data/data_test.csv", index=False)
+    df_test.to_csv("data/data_test.csv", index=False)
     print("Тестовый датасет сохранен: data/data_train.csv")
 
     # сохраняем скалер для использования на новых данных
-    with open("../data/scaler.pkl", "wb") as f:
+    with open("data/scaler.pkl", "wb") as f:
         pickle.dump(scaler, f)
     print("Скалер сохранен: data/scaler.pkl")
 
     # сохраняем именая таргетов для использования на новых данных
-    with open("../data/target_names.pkl", "wb") as f:
+    with open("data/target_names.pkl", "wb") as f:
         pickle.dump(ds.target_names, f)
     print("Имена целевых значений сохранены: data/target_names.pkl")
 
     # сохраняем описание датафрейма в файл, из которого мы сможем взять необходимые данные по ТОП-5 фич
     # а именно, имена параметром, их минимальные и максимальные значения и тп
-    with open("../data/features_info.pkl", "wb") as f:
+    with open("data/features_info.pkl", "wb") as f:
         pickle.dump(pd.DataFrame(X_top, columns=new_features).describe(), f)
     print("Данные по ТОП-5 лучших параметров сохранены: data/features_info.pkl")
 

@@ -24,14 +24,14 @@ from data_creation import create_ds
 def train_model():
     # пытаемся прочитать файл с тренировочными данными
     try:
-        df_train = pd.read_csv("../data/data_train.csv", delimiter=",")
+        df_train = pd.read_csv("data/data_train.csv", delimiter=",")
     except:
         # файла data_train не найден, вероятнее всего data_creation не был ранее вызван и данные не были подготовлены
         # вызываем функцию подготовку данных и их сохраненния в файлы
         create_ds()
         try:
             # и снова пытаемся открыть файл с данными
-            df_train = pd.read_csv("../data/data_train.csv", delimiter=",")
+            df_train = pd.read_csv("data/data_train.csv", delimiter=",")
         except:
             # поскольку подготовленных данных изначально не было и попытка их подготовить не увенчалась успехом
             # прекращаем работу с ошибкой
@@ -71,8 +71,8 @@ def train_model():
     best_model.fit(X_train, y_train)
 
     # создаем директорию для хранения модели
-    os.makedirs("../model", exist_ok=True)
-    with open("../model/model.pkl", "wb") as file:
+    os.makedirs("model", exist_ok=True)
+    with open("model/model.pkl", "wb") as file:
         pickle.dump(best_model, file)
         print("Модель сохранена: model/model.pkl")
 

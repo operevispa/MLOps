@@ -9,5 +9,5 @@ lab3/frontend/.venv
 lab3/backend/.venv
 lab3/backend/.vscode
 lab3/backend/__pycache__
-lab3/model
-lab3/data
+lab3/backend/model
+lab3/backend/data
