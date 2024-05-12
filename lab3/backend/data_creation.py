@@ -3,11 +3,12 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+import pickle
 import pandas as pd
 import os
 
 
-if __name__ == "__main__":
+def create_ds():
     # используем стандартный датасет из библиотеки sklearn (рак груди)
     # данный датасет используется для задач классификации
     ds = load_breast_cancer()
@@ -50,4 +51,25 @@ if __name__ == "__main__":
     df_test["target"] = y_test
     df_test.to_csv("../data/data_test.csv", index=False)
     print("Тестовый датасет сохранен: data/data_train.csv")
+
+    # сохраняем скалер для использования на новых данных
+    with open("../data/scaler.pkl", "wb") as f:
+        pickle.dump(scaler, f)
+    print("Скалер сохранен: data/scaler.pkl")
+
+    # сохраняем именая таргетов для использования на новых данных
+    with open("../data/target_names.pkl", "wb") as f:
+        pickle.dump(ds.target_names, f)
+    print("Имена целевых значений сохранены: data/target_names.pkl")
+
+    # сохраняем описание датафрейма в файл, из которого мы сможем взять необходимые данные по ТОП-5 фич
+    # а именно, имена параметром, их минимальные и максимальные значения и тп
+    with open("../data/features_info.pkl", "wb") as f:
+        pickle.dump(pd.DataFrame(X_top, columns=new_features).describe(), f)
+    print("Данные по ТОП-5 лучших параметров сохранены: data/features_info.pkl")
+
     print("-" * 100)
+
+
+if __name__ == "__main__":
+    create_ds()

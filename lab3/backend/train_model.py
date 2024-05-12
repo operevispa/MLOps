@@ -17,14 +17,26 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report
 
+from data_creation import create_ds
 
-if __name__ == "__main__":
+
+# функция осуществляет тренировку модели на основании ранее подготовленного датасета
+def train_model():
     # пытаемся прочитать файл с тренировочными данными
     try:
         df_train = pd.read_csv("../data/data_train.csv", delimiter=",")
     except:
-        print("ERROR: тренировочный датасет не найден!")
-        sys.exit(1)
+        # файла data_train не найден, вероятнее всего data_creation не был ранее вызван и данные не были подготовлены
+        # вызываем функцию подготовку данных и их сохраненния в файлы
+        create_ds()
+        try:
+            # и снова пытаемся открыть файл с данными
+            df_train = pd.read_csv("../data/data_train.csv", delimiter=",")
+        except:
+            # поскольку подготовленных данных изначально не было и попытка их подготовить не увенчалась успехом
+            # прекращаем работу с ошибкой
+            print("ERROR: тренировочный датасет не найден!")
+            sys.exit(1)
 
     print("Тренировочный датасет загружен...")
     # достаем из датафрейма тарегеты и помещаем их в y
@@ -65,3 +77,9 @@ if __name__ == "__main__":
         print("Модель сохранена: model/model.pkl")
 
     print("-" * 100)
+
+    return best_model
+
+
+if __name__ == "__main__":
+    train_model()
