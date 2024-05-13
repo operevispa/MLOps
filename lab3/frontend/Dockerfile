@@ -7,6 +7,10 @@ WORKDIR /frontend
 #ENV PATH="/frontend/venv/bin:$PATH"
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8501
+# Обновление списка пакетов
+RUN apt-get update 
 
-CMD streamlit run frontend.py --server.port=8501 --server.address=0.0.0.0
+# Установка curl
+RUN apt-get install -y curl
+
+CMD ["streamlit", "run", "frontend.py"]
