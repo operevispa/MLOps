@@ -25,7 +25,7 @@
 Загрузка датасета версии 3 производится путем переключения на соответствующий коммит и скачиванием файлов
 ```
  git log --oneline
- git checkout <commit_id>
+ git checkout 359d506
  dvc pull
  ```
  ![Коммиты](images/commits.png)
