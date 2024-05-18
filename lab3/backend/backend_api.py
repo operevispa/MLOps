@@ -28,23 +28,21 @@ class Item(BaseModel):
 # загружаем ранее сохраненную модель
 def load_model():
     # проверяем наличии файла model.pkl
-    if os.path.exists(MODEL_PATH):
-        try:
-            with open(MODEL_PATH, "rb") as f:
-                return pickle.load(f)
-        except Exception as e:
-            # формируем ошибку с кодом 500 (внутренняя ошибка сервера)
-            raise HTTPException(
-                status_code=500, detail=f"Ошибка загрузки модели: {str(e)}"
-            )
-    else:
+    if not os.path.exists(MODEL_PATH):
         # файла с моделью не оказалось,
         # поэтому запускаем функцию тренировки модели (для учебной задачи допустимо)
-        model = (
-            train_model.train_model()
-        )  # Предполагается, что train_model.train_model() возвращает обученную модель
-        pickle.dump(model, MODEL_PATH)
-        return model
+        # model = train_model()
+        # return model
+        print("Файл с моделью не найден. Начинается тренировка модели...")
+        train_model()
+
+    try:
+        with open(MODEL_PATH, "rb") as f:
+            print("Модель из файла загружена!")
+            return pickle.load(f)
+    except Exception as e:
+        # формируем ошибку с кодом 500 (внутренняя ошибка сервера)
+        raise HTTPException(status_code=500, detail=f"Ошибка загрузки модели: {str(e)}")
 
 
 # загружаем скалер, имена целевых значений и информацию о фичах
@@ -62,10 +60,15 @@ def load_data():
     except Exception as e:
         # формируем ошибку с кодом 500 (внутренняя ошибка сервера)
         raise HTTPException(status_code=500, detail=f"Ошибка загрузки данных!")
+    else:
+        print(
+            "Файлы со скалером, именами целевой паременной и параметрами найден и загружен!"
+        )
 
     return scaler, target_names, features
 
 
+print("api server is runing in main...")
 # загрузка или обучение модели при запуске backend
 model = load_model()
 # загрузка скалера, имен целевой переменной, информации по фичам
@@ -117,4 +120,5 @@ async def get_features_info():
 
 
 if __name__ == "__main__":
+    print("api server is runing in main...")
     uvicorn.run(app, port=8000)
