@@ -11,7 +11,7 @@
 
 Тестирование вне jupiter ноубука осуществляется запуском команды `pytest l5_test.py`, после запуска основного скрипта командой `python l5_code.py`.
 
-![Тестирование в collab](images/commits.png)
+![Тестирование в collab](images/test_screen.png)
 
 
 ## Файлы
